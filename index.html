@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>当てろ！⅙お盆玉サバイバル！</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+body{
+background:linear-gradient(#02142e,#000);
+color:#fff;
+height:100vh;
+overflow:hidden;
+}
+
+.screen{
+display:none;
+width:100%;
+height:100%;
+padding:20px;
+text-align:center;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+position:absolute;
+left:0;
+top:0;
+}
+
+.active{
+display:flex;
+}
+
+h1{
+font-size:2.2rem;
+color:#ffd54f;
+text-shadow:0 0 12px orange;
+margin-bottom:15px;
+}
+
+.subtitle{
+font-size:1rem;
+margin-bottom:40px;
+}
+
+button{
+border:none;
+border-radius:16px;
+padding:16px 26px;
+font-size:1.2rem;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
+}
+
+button:active{
+transform:scale(.95);
+}
+
+#startBtn{
+background:#ff9800;
+color:white;
+width:250px;
+}
+
+.stageTitle{
+font-size:2rem;
+margin-bottom:25px;
+}
+
+.buttonArea{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.choice{
+width:90px;
+height:90px;
+color:white;
+font-size:1.4rem;
+}
+
+.red{
+background:#e53935;
+}
+
+.blue{
+background:#1e88e5;
+}
+
+.green{
+background:#43a047;
+}
+
+.door{
+width:140px;
+height:220px;
+background:#6d4c41;
+border:6px solid #d7b56d;
+color:white;
+font-size:1.2rem;
+}
+
+.msg{
+margin-top:35px;
+font-size:2rem;
+min-height:60px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="title" class="screen active">
+
+<h1>🏮当てろ！⅙お盆玉サバイバル！🏮</h1>
+
+<div class="subtitle">
+～ChatGPT（チャッピー）協力～
+</div>
+
+<button id="startBtn">
+ゲームスタート
+</button>
+
+</div>
+<div id="stage1" class="screen">
+
+<div class="stageTitle">
+🟥 3択チャレンジ
+</div>
+
+<div class="buttonArea">
+
+<button class="choice red" onclick="pick3(0)">
+赤
+</button>
+
+<button class="choice blue" onclick="pick3(1)">
+青
+</button>
+
+<button class="choice green" onclick="pick3(2)">
+緑
+</button>
+
+</div>
+
+<div id="msg1" class="msg"></div>
+
+</div>
+
+<div id="stage2" class="screen">
+
+<div class="stageTitle">
+🚪 最終関門 🚪
+</div>
+
+<div class="buttonArea">
+
+<button class="door" onclick="pick2(0)">
+運命の扉
+</button>
+
+<button class="door" onclick="pick2(1)">
+運命の扉
+</button>
+
+</div>
+
+<div id="msg2" class="msg"></div>
+
+</div>
+
+<div id="result" class="screen">
+
+<h1 id="resultTitle"></h1>
+
+<div class="subtitle">
+画面をタップすると最初に戻ります
+</div>
+
+</div>
+<script>
+
+const title=document.getElementById("title");
+const stage1=document.getElementById("stage1");
+const stage2=document.getElementById("stage2");
+const result=document.getElementById("result");
+
+const msg1=document.getElementById("msg1");
+const msg2=document.getElementById("msg2");
+const resultTitle=document.getElementById("resultTitle");
+
+document.getElementById("startBtn").onclick=()=>{
+
+title.classList.remove("active");
+stage1.classList.add("active");
+
+};
+
+function show(screen){
+
+title.classList.remove("active");
+stage1.classList.remove("active");
+stage2.classList.remove("active");
+result.classList.remove("active");
+
+screen.classList.add("active");
+
+}
+
+function randomSuccess(rate){
+
+return Math.random()<rate;
+
+}
+
+const success3=[
+"✨キラッ！",
+"🔔ピンポーン！",
+"🎆小花火！",
+"🌸成功！"
+];
+
+const fail3=[
+"💥ハズレ！",
+"⚡残念！",
+"🌪失敗！",
+"😢ダメ！"
+];
+
+const success2=[
+"🎉お盆玉GET!!",
+"🎆大成功!!",
+"🌈クリア!!",
+"✨おめでとう!!"
+];
+
+const fail2=[
+"💥失敗…",
+"⚡ハズレ!!",
+"🌑残念!!",
+"🚪閉ざされた…"
+];
+function pick3(choice){
+
+const ok=Math.floor(Math.random()*3);
+
+if(choice===ok){
+
+msg1.innerHTML=
+success3[Math.floor(Math.random()*success3.length)];
+
+setTimeout(()=>{
+
+show(stage2);
+
+},1200);
+
+}else{
+
+msg1.innerHTML=
+fail3[Math.floor(Math.random()*fail3.length)];
+
+setTimeout(()=>{
+
+msg1.innerHTML="";
+show(stage1);
+
+},1200);
+
+}
+
+}
+
+function pick2(choice){
+
+const ok=Math.floor(Math.random()*2);
+
+if(choice===ok){
+
+msg2.innerHTML=
+success2[Math.floor(Math.random()*success2.length)];
+
+setTimeout(()=>{
+
+resultTitle.innerHTML="🎉 お盆玉GET!! 🎉";
+
+show(result);
+
+},1500);
+
+}else{
+
+msg2.innerHTML=
+fail2[Math.floor(Math.random()*fail2.length)];
+
+setTimeout(()=>{
+
+msg2.innerHTML="";
+show(stage1);
+
+},1500);
+
+}
+
+}
+
+result.onclick=()=>{
+
+msg1.innerHTML="";
+msg2.innerHTML="";
+
+show(stage1);
+
+};  
+for(let i=0;i<80;i++){
+
+const star=document.createElement("div");
+
+star.style.position="absolute";
+star.style.width="2px";
+star.style.height="2px";
+star.style.borderRadius="50%";
+star.style.background="white";
+star.style.left=Math.random()*100+"vw";
+star.style.top=Math.random()*100+"vh";
+star.style.opacity=Math.random();
+
+document.body.appendChild(star);
+
+}
+
+for(let i=0;i<6;i++){
+
+const lantern=document.createElement("div");
+
+lantern.innerHTML="🏮";
+
+lantern.style.position="absolute";
+lantern.style.top="20px";
+lantern.style.left=(10+i*15)+"%";
+lantern.style.fontSize="34px";
+
+document.body.appendChild(lantern);
+
+}
+
+</script>
+
+</body>
+</html>
