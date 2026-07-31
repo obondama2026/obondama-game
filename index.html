@@ -117,7 +117,81 @@ margin-top:35px;
 font-size:2rem;
 min-height:60px;
 }
+@keyframes glow{
 
+0%{
+text-shadow:0 0 10px orange;
+}
+
+50%{
+text-shadow:0 0 30px yellow;
+}
+
+100%{
+text-shadow:0 0 10px orange;
+}
+
+}
+
+@keyframes float{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+@keyframes swing{
+
+0%{
+transform:rotate(-4deg);
+}
+
+50%{
+transform:rotate(4deg);
+}
+
+100%{
+transform:rotate(-4deg);
+}
+
+}
+
+h1{
+
+animation:glow 2s infinite;
+
+}
+
+#startBtn{
+
+animation:float 2s ease-in-out infinite;
+
+box-shadow:0 0 20px orange;
+
+}
+
+.star{
+
+animation:glow 3s infinite;
+
+}
+
+.lantern{
+
+animation:swing 2.5s ease-in-out infinite;
+
+transform-origin:top center;
+
+}
 </style>
 
 </head>
@@ -331,7 +405,7 @@ show(stage1);
 for(let i=0;i<80;i++){
 
 const star=document.createElement("div");
-
+star.className="star";
 star.style.position="absolute";
 star.style.width="2px";
 star.style.height="2px";
@@ -348,9 +422,8 @@ document.body.appendChild(star);
 for(let i=0;i<6;i++){
 
 const lantern=document.createElement("div");
-
+lantern.className="lantern";
 lantern.innerHTML="🏮";
-
 lantern.style.position="absolute";
 lantern.style.top="20px";
 lantern.style.left=(10+i*15)+"%";
