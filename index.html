@@ -224,6 +224,61 @@ background:#b00020;
 background:#02142e;
 }
 }
+.door{
+animation:doorSwing 2s ease-in-out infinite;
+transform-origin:top center;
+}
+
+@keyframes doorSwing{
+0%,100%{
+transform:rotate(-2deg);
+}
+50%{
+transform:rotate(2deg);
+}
+}
+.door{
+position:relative;
+overflow:hidden;
+}
+
+.door::after{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:60%;
+height:100%;
+background:rgba(255,255,180,.6);
+transform:skewX(-20deg);
+animation:doorLight 3s infinite;
+}
+
+@keyframes doorLight{
+0%{
+left:-120%;
+}
+40%{
+left:-120%;
+}
+100%{
+left:170%;
+}
+}
+.shake{
+animation:shake .35s;
+}
+
+@keyframes shake{
+
+0%{transform:translateX(0);}
+20%{transform:translateX(-10px);}
+40%{transform:translateX(10px);}
+60%{transform:translateX(-8px);}
+80%{transform:translateX(8px);}
+100%{transform:translateX(0);}
+
+}
 </style>
 
 </head>
@@ -383,6 +438,7 @@ show(stage2);
 msg1.innerHTML=
 fail3[Math.floor(Math.random()*fail3.length)];
 flash("flashFail");
+shake();
 setTimeout(()=>{
 
 msg1.innerHTML="";
@@ -417,6 +473,7 @@ show(result);
 msg2.innerHTML=
 fail2[Math.floor(Math.random()*fail2.length)];
 flash("flashFail");
+shake();
 setTimeout(()=>{
 
 msg2.innerHTML="";
@@ -437,7 +494,15 @@ show(stage1);
 
 };  
 function flash(type){
+function shake(){
 
+document.body.classList.remove("shake");
+
+void document.body.offsetWidth;
+
+document.body.classList.add("shake");
+
+}
 document.body.classList.remove("flashSuccess");
 document.body.classList.remove("flashFail");
 
