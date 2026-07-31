@@ -220,6 +220,37 @@ transform:rotate(5deg);
 }
 }
 }
+.flashSuccess{
+animation:flashSuccess .5s;
+}
+
+.flashFail{
+animation:flashFail .5s;
+}
+
+@keyframes flashSuccess{
+0%{
+background:#000;
+}
+50%{
+background:#ffe066;
+}
+100%{
+background:#02142e;
+}
+}
+
+@keyframes flashFail{
+0%{
+background:#000;
+}
+50%{
+background:#b00020;
+}
+100%{
+background:#02142e;
+}
+}
 </style>
 
 </head>
@@ -366,7 +397,8 @@ if(choice===ok){
 
 msg1.innerHTML=
 success3[Math.floor(Math.random()*success3.length)];
-
+flash("flashSuccess");
+confetti();
 setTimeout(()=>{
 
 show(stage2);
@@ -377,7 +409,7 @@ show(stage2);
 
 msg1.innerHTML=
 fail3[Math.floor(Math.random()*fail3.length)];
-
+flash("flashFail");
 setTimeout(()=>{
 
 msg1.innerHTML="";
@@ -397,7 +429,8 @@ if(choice===ok){
 
 msg2.innerHTML=
 success2[Math.floor(Math.random()*success2.length)];
-
+flash("flashSuccess");
+confetti();
 setTimeout(()=>{
 
 resultTitle.innerHTML="🎉 お盆玉GET!! 🎉";
@@ -410,7 +443,7 @@ show(result);
 
 msg2.innerHTML=
 fail2[Math.floor(Math.random()*fail2.length)];
-
+flash("flashFail");
 setTimeout(()=>{
 
 msg2.innerHTML="";
@@ -430,6 +463,51 @@ msg2.innerHTML="";
 show(stage1);
 
 };  
+function flash(type){
+
+document.body.classList.remove("flashSuccess");
+document.body.classList.remove("flashFail");
+
+void document.body.offsetWidth;
+
+document.body.classList.add(type);
+
+}
+function confetti(){
+
+for(let i=0;i<40;i++){
+
+const paper=document.createElement("div");
+
+paper.innerHTML="🎊";
+
+paper.style.position="fixed";
+paper.style.left=Math.random()*100+"vw";
+paper.style.top="-30px";
+paper.style.fontSize=(20+Math.random()*18)+"px";
+paper.style.pointerEvents="none";
+paper.style.transition="transform 2s linear, opacity 2s";
+
+document.body.appendChild(paper);
+
+setTimeout(()=>{
+
+paper.style.transform=
+`translateY(${window.innerHeight+80}px) rotate(${720*Math.random()}deg)`;
+
+paper.style.opacity="0";
+
+},10);
+
+setTimeout(()=>{
+
+paper.remove();
+
+},2100);
+
+}
+
+}
 for(let i=0;i<80;i++){
 
 const star=document.createElement("div");
