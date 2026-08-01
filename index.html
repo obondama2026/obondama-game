@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>スロット2択ゲーム</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+body{
+background:#111;
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+#game{
+text-align:center;
+}
+
+h1{
+font-size:2.2rem;
+margin-bottom:25px;
+color:#ffd54f;
+}
+
+#slot{
+font-size:90px;
+margin:30px;
+height:110px;
+}
+
+button{
+padding:15px 35px;
+font-size:1.2rem;
+margin:10px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+}
+
+#start{
+background:#ff9800;
+color:white;
+}
+
+.choice{
+display:none;
+background:#2196f3;
+color:white;
+}
+
+#result{
+font-size:1.8rem;
+margin-top:30px;
+height:50px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<h1>🎰 スロット2択ゲーム 🎰</h1>
+
+<div id="slot">❓</div>
+
+<button id="start">スタート</button>
+
+<br>
+
+<button class="choice" id="left">左</button>
+
+<button class="choice" id="right">右</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+const slot=document.getElementById("slot");
+const start=document.getElementById("start");
+const left=document.getElementById("left");
+const right=document.getElementById("right");
+const result=document.getElementById("result");
+
+const icons=["🎁","💰","⭐","🍀","🎉"];
+
+let answer=0;
+let timer=null;
+  function spin(){
+
+    const icon = icons[Math.floor(Math.random()*icons.length)];
+    slot.textContent = icon;
+
+}
+
+start.onclick = ()=>{
+
+    start.disabled = true;
+    result.textContent = "";
+
+    timer = setInterval(spin,100);
+
+    setTimeout(()=>{
+
+        clearInterval(timer);
+
+        answer = Math.floor(Math.random()*2);
+
+        left.style.display="inline-block";
+        right.style.display="inline-block";
+
+    },2000);
+
+};
+
+function finish(choice){
+
+    left.style.display="none";
+    right.style.display="none";
+    start.disabled = false;
+
+    if(choice===answer){
+
+        result.textContent="🎉 大当たり！！";
+
+    }else{
+
+        result.textContent="💥 ハズレ！";
+
+    }
+
+}
+
+left.onclick=()=>finish(0);
+right.onclick=()=>finish(1);
+</script>
+
+</body>
+</html>
+  
